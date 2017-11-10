@@ -17,37 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Secure your favorite restaurants without the hassle ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
 MealVisitorPal, or MVP, saves you the effort of signing up for a meal everyday! Set your top restaurants for each day and let MVP do the work!
 
 ## For the forgetful and the hungry ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
 This is targetted towards people like us who always forget to sign up for their meal and for those who want to secure their favorite restaurant before they are sold out.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
 MealVisitorPal works for you. You tell it upfront what you want and when you want it and MVP will do the rest.
 
 ## Problem ##
-  > Describe the problem your product solves.
 There are restaurants that are always sold out of their meals before most people have chance to select their meal. Additionally, there are people who always forget to pick their meal for the next day.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
 MealVisitorPal will attempt to register for your selected restaurant when the kitchen time opens (5pm). It will save the user from the effort of having to sign in everyday and selecting a meal!
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
 "I love food!" -Alan C.
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
 Sign in, pick your restaurants, pick your time. Forget about picking meals for tomorrow and remember to pick up your meal for today!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
 "" -
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
 Forget about tomorrow, your stomach needs you today!

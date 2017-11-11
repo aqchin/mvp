@@ -5,6 +5,7 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 
+const db = require('./database');
 const mp = require('./helpers/mp');
 
 const app = express();
@@ -22,6 +23,8 @@ app.post('/login', (req, res) => {
   console.log(req.body);
   mp.login(req.body.email, req.body.password).then((res) => {
     console.log('Got a response!', res);
+    res.statusCode = 200;
+    res.send();
 
   }).catch((err) => {
     console.log('Error POST /login:', err);
@@ -37,7 +40,7 @@ app.post('/lunch', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  // res.sendFile(path.join(__dirname, 'dist/index.html'));
+  // check for session_token/cookie
   res.redirect(302, '/login');
 });
 

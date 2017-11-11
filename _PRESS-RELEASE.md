@@ -1,4 +1,4 @@
-# MealVisitorPal #
+# MVP #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,19 +17,19 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Secure your favorite restaurants without the hassle ##
-MealVisitorPal, or MVP, saves you the effort of signing up for a meal everyday! Set your top restaurants for each day and let MVP do the work!
+MVP saves you the effort of signing up for a meal everyday! Set your top restaurants for each day and let MVP do the work!
 
 ## For the forgetful and the hungry ##
 This is targetted towards people like us who always forget to sign up for their meal and for those who want to secure their favorite restaurant before they are sold out.
 
 ## Summary ##
-MealVisitorPal works for you. You tell it upfront what you want and when you want it and MVP will do the rest.
+MVP works for you. You tell it upfront what you want and when you want it and MVP will do the rest.
 
 ## Problem ##
 There are restaurants that are always sold out of their meals before most people have chance to select their meal. Additionally, there are people who always forget to pick their meal for the next day.
 
 ## Solution ##
-MealVisitorPal will attempt to register for your selected restaurant when the kitchen time opens (5pm). It will save the user from the effort of having to sign in everyday and selecting a meal!
+MVP will attempt to register for your selected restaurant when the kitchen time opens (5pm). It will save the user from the effort of having to sign in everyday and selecting a meal!
 
 ## Quote from You ##
 "I love food!" -Alan C.

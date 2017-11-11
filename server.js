@@ -1,10 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 
-const login = require('./server/routes/login');
-// const lunch = require('./server/routes/lunch');
+const mp = require('./helpers/mp');
 
 const app = express();
 
@@ -13,11 +14,25 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/login', login);
-// app.use('/lunch', lunch);
-
-app.get('*', (req, res) => {
+app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+app.post('/login', (req, res) => {
+
+});
+
+app.get('/lunch', (req, res) => {
+
+});
+
+app.post('/lunch', (req, res) => {
+
+});
+
+app.get('/', (req, res) => {
+  // res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.redirect(302, '/login');
 });
 
 const port = process.env.PORT || '6969';

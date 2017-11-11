@@ -19,7 +19,13 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+  console.log(req.body);
+  mp.login(req.body.email, req.body.password).then((res) => {
+    console.log('Got a response!', res);
 
+  }).catch((err) => {
+    console.log('Error POST /login:', err);
+  });
 });
 
 app.get('/lunch', (req, res) => {

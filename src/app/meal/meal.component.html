@@ -1,4 +1,5 @@
 <div>
+<ng-container *ngIf="isScheduleDay"><strong>*</strong></ng-container>
 {{day}}day
 @
   <select (change)="onTimeChange($event)">

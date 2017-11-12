@@ -12,7 +12,7 @@ export class AppComponent {
   firstName: string;
   lastName: string;
   sessionToken = null;
-  restaurants = [];
+  meals = [];
   prefs = {
     'mon': {},
     'tues': {},
@@ -54,8 +54,9 @@ export class AppComponent {
 
   fetchMeals() {
     this.http.get('/lunch').subscribe((data: object[]) => {
-      console.log('Got food!', data);
-      this.restaurants = data.map((entry) => entry['restaurant']);
+      // console.log('Got food!', data);
+      this.meals = data;
+      // this.restaurants = data.map((entry) => entry['restaurant']);
 
     }, (err) => {
       console.log('Oh no! We couldn\'t find food:', err);

@@ -1,12 +1,17 @@
 <div>
   <label>Select your restaurants:</label>
-  <app-meal
-    *ngFor="let day of days"
-    (timeChangeEvent)="onTimeChange($event)"
-    (restaurantChangeEvent)="onRestaurantChange($event)"
-    [day]="day"
-    [restaurants]="restaurants"  
-  ></app-meal>
+  <ng-container *ngFor="let day of days">
+    <app-meal
+      (timeChangeEvent)="onTimeChange($event)"
+      (restaurantChangeEvent)="onRestaurantChange($event)"
+      [day]="day"
+      [restaurants]="restaurants"
+      [isScheduleDay]="day===scheduleDay"
+    ></app-meal>
+      <div *ngIf="day===scheduleDay">
+      {{''}}
+    </div>
+  </ng-container>
 
   <button (click)="updatePreferences()" type="submit">update</button>
 </div>

@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 export class MealComponent implements OnInit {
   @Input() day: string;
   @Input() restaurants: string[];
+  @Input() isScheduleDay = false;
   @Output() timeChangeEvent: EventEmitter<any> = new EventEmitter();
   @Output() restaurantChangeEvent: EventEmitter<any> = new EventEmitter();
   restaurant: string;
@@ -32,16 +33,25 @@ export class MealComponent implements OnInit {
 
   ngOnInit() {
     this.extendedLunch = new Set(['tues', 'thurs']).has(this.day);
+    // console.log(this.day, this.isScheduleDay);
   }
 
   onTimeChange(event) {
     // console.log('onTimeChange', event.target.value);
-    this.timeChangeEvent.emit({day: this.day, time: event.target.value});
+    // console.log(this.day, this.isScheduleDay);
+    this.timeChangeEvent.emit({
+      day: this.day,
+      time: event.target.value
+    });
   }
 
   onRestaurantChange(event) {
     // console.log('onRestaurantChange', event.target.value);
-    this.restaurantChangeEvent.emit({day: this.day, restaurant: event.target.value});
+    this.restaurantChangeEvent.emit({
+      day: this.day,
+      restaurant: event.target.value,
+      index: event.target.key
+    });
   }
 }
 

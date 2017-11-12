@@ -41,11 +41,13 @@ app.get('/lunch', (req, res) => {
     res.statusCode = 200;
     res.send(data.data.result.map((entry) => {
       return {
+        date: entry.date.iso,
         meal: entry.meal.name,
         restaurant: entry.restaurant.name,
         address: entry.restaurant.address,
         mpnLunchOpen: entry.restaurant.mpnLunchOpen,
         mpnLunchClose: entry.restaurant.mpnLunchClose,
+        objectId: entry.objectId,
       };
     }));
     

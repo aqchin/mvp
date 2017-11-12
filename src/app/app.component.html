@@ -3,8 +3,13 @@
   <h1>
     Welcome to {{title}}!
   </h1>
+  <h2>Sign in:</h2>
+  <app-login (loginEvent)="onLogin($event)"></app-login>
+  <br>
+  <app-lunch 
+    (updatePrefsEvent)="onUpdatePrefs($event)"
+    [days]="days"
+    [restaurants]="restaurants"
+  ></app-lunch>
 </div>
-<h2>Sign in!</h2>
-<app-login (loginEvent)="onSubmitLogin($event)"></app-login>
-<app-lunch (updatePrefsEvent)="onUpdatePrefs($event)" [restaurants]="restaurants"></app-lunch>
 

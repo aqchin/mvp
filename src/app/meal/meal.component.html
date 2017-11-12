@@ -1,22 +1,32 @@
 <div>
 {{day}}day
 @
-<select>
-  <option *ngFor="let time of times" [value]="time">
-    {{time}}
-  </option>
-  <ng-container *ngIf="extendedLunch">
-    <option *ngFor="let time of timesExtended" [value]="time">
+  <select (change)="onTimeChange($event)">
+    <option *ngFor="let time of times" [value]="time">
       {{time}}
     </option>
-  </ng-container>
-</select>
+    <ng-container *ngIf="extendedLunch">
+      <option
+        *ngFor="let time of timesExtended"
+        [value]="time"
+      >
+        {{time}}
+      </option>
+    </ng-container>
+  </select>
 
-<input list="restaurants">
-<datalist id="restaurants">
-  <option *ngFor="let restaurant of sampleRestaurants" [value]="restaurant">
-    {{restaurant}}
-  </option>
-</datalist>
+  <input
+    list="restaurants"
+    (change)="onRestaurantChange($event)"
+    (keyup)="onRestaurantChange($event)"
+  >
+  <datalist id="restaurants">
+    <option 
+      *ngFor="let restaurant of restaurants"
+      [value]="restaurant"
+    >
+      {{restaurant}}
+    </option>
+  </datalist>
 </div>
 

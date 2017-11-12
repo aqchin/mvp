@@ -34,7 +34,26 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/lunch', (req, res) => {
-
+  console.log(req.body);
+  const cityId = req.body.cityId || '00000000-1000-4000-9091-919aa43e4747';
+  mp.fetchMeals(cityId).then((data) => {
+    // console.log('Got food!', data);
+    res.statusCode = 200;
+    res.send(data.data.result.map((entry) => {
+      return {
+        meal: entry.meal.name,
+        restaurant: entry.restaurant.name,
+        address: entry.restaurant.address,
+        mpnLunchOpen: entry.restaurant.mpnLunchOpen,
+        mpnLunchClose: entry.restaurant.mpnLunchClose,
+      };
+    }));
+    
+  }).catch((err) => {
+    console.log('Error GET /lunch:', err);
+    res.statusCode = 404;
+    res.send(err.data);
+  });
 });
 
 app.post('/lunch', (req, res) => {

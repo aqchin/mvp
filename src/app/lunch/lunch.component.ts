@@ -8,7 +8,30 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 })
 
 export class LunchComponent implements OnInit {
-  @Input() restaurants;
+  @Input() restaurants: string[];
+  @Input() days: string[] = ['mon', 'tues', 'wednes', 'thurs', 'fri'];
+  @Input() prefs: object = {
+    mon: {
+      time: '12:30-12:45pm',
+      restaurant: '',
+    },
+    tues: {
+      time: '12:30-12:45pm',
+      restaurant: '',
+    },
+    wednes: {
+      time: '12:30-12:45pm',
+      restaurant: '',
+    },
+    thurs: {
+      time: '12:30-12:45pm',
+      restaurant: '',
+    },
+    fri: {
+      time: '12:30-12:45pm',
+      restaurant: '',
+    },
+  };
   @Output() updatePrefsEvent: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
@@ -16,10 +39,18 @@ export class LunchComponent implements OnInit {
   ngOnInit() {}
 
   updatePreferences() {
-    console.log('Update preferences!');
-    this.updatePrefsEvent.emit({
-    // pass some shit 
-    });
+    console.log('Update preferences!', this.prefs);
+    this.updatePrefsEvent.emit(this.prefs);
+  }
+
+  onTimeChange(event) {
+    console.log(event);
+    this.prefs[event['day']].time = event['time'];
+  }
+
+  onRestaurantChange(event) {
+    console.log(event);
+    this.prefs[event['day']].restaurant = event['restaurant'];
   }
 }
 

@@ -13,6 +13,7 @@ export class MealComponent implements OnInit {
   @Output() timeChangeEvent: EventEmitter<any> = new EventEmitter();
   @Output() restaurantChangeEvent: EventEmitter<any> = new EventEmitter();
   restaurant: string;
+  time: string;
   extendedLunch = false;
 
   times = [
@@ -26,25 +27,21 @@ export class MealComponent implements OnInit {
     '1:45-2:00pm',
     '2:15-2:30pm',
   ];
-  sampleRestaurants = [
-    'ponda aspres',
-    'tolk o bel',
-    'mcdonels',
-    'bergor kin',
-    'Chick-Fil-A',
-  ];
 
   constructor() {}
 
   ngOnInit() {
-    if (['tues', 'thurs'].indexOf(this.day) !== -1) {
-      this.extendedLunch = true;
-    }
+    this.extendedLunch = new Set(['tues', 'thurs']).has(this.day);
   }
 
-  onTimeChange() {
+  onTimeChange(event) {
+    // console.log('onTimeChange', event.target.value);
+    this.timeChangeEvent.emit({day: this.day, time: event.target.value});
   }
 
-  onRestaurantChange() {
+  onRestaurantChange(event) {
+    // console.log('onRestaurantChange', event.target.value);
+    this.restaurantChangeEvent.emit({day: this.day, restaurant: event.target.value});
   }
 }
+

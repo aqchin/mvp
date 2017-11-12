@@ -27,10 +27,12 @@ const login = (email, password) => { // login is email
   return axios.post(loginUrl, data, config); // promise
 };
 
-const getByCity = (cityId='00000000-1000-4000-9091-919aa43e4747') => {
+const fetchMeals = (cityId) => {
   const data = {
     'cityId': cityId,
   };
+
+  return axios.post(getByCityUrl, data, config);
 };
 
 const reserve = (sessionToken, scheduleId, pickupTime='12:45-1:00pm', quantity=1) => {
@@ -47,6 +49,6 @@ const reserve = (sessionToken, scheduleId, pickupTime='12:45-1:00pm', quantity=1
 };
 
 module.exports.login = login;
-module.exports.getByCity = getByCity;
+module.exports.fetchMeals = fetchMeals;
 module.exports.reserve = reserve;
 

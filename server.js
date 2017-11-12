@@ -21,13 +21,15 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log(req.body);
-  mp.login(req.body.email, req.body.password).then((res) => {
-    console.log('Got a response!', res);
+  mp.login(req.body.email, req.body.password).then((data) => {
+    console.log('Got a response!', data);
     res.statusCode = 200;
-    res.send();
+    res.send(data.data);
 
   }).catch((err) => {
     console.log('Error POST /login:', err);
+    res.statusCode = 404;
+    res.send(err.data);
   });
 });
 

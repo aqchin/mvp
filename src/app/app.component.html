@@ -5,6 +5,6 @@
   </h1>
 </div>
 <h2>Sign in!</h2>
-<app-login></app-login>
-<app-lunch></app-lunch>
+<app-login (loginEvent)="onSubmitLogin($event)"></app-login>
+<app-lunch (updatePrefsEvent)="onUpdatePrefs($event)" [restaurants]="restaurants"></app-lunch>
 

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const connection = mongoose.createConnection('mongodb://localhost/mvp');
+const connection = mongoose.createConnection(process.env.DB || 'mongodb://localhost/mvp');
 
 const userSchema = mongoose.Schema({
   email: {type: String, required: true, unique: true},
@@ -15,7 +15,7 @@ const save = (email, sessionToken) => {
   };
 
   return new Promise((resolve, reject) => {
-    new User(user).save((err, res suc) => {
+    new User(user).save((err, res, suc) => {
       if (err) reject(err);
       else resolve(res);
     });
@@ -31,6 +31,6 @@ const find = (email) => {
   });
 };
 
-modules.export.save = save;
-modules.export.find = find;
+module.exports.save = save;
+module.exports.find = find;
 

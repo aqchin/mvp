@@ -1,3 +1,12 @@
-<p>
-  lunch works!
-</p>
+<div>
+  <label>lunch</label>
+  <!-- <app-meal [day]="'mon'"></app-meal> -->
+  <!-- <app-meal [day]="'tues'"></app-meal> -->
+  <!-- <app-meal [day]="'wednes'"></app-meal> -->
+  <!-- <app-meal [day]="'thurs'"></app-meal> -->
+  <!-- <app-meal [day]="'fri'"></app-meal> -->
+  <app-meal *ngFor="let day of days" [day]="day"></app-meal>
+
+  <button (click)="updatePreferences()" type="submit">update</button>
+</div>
+

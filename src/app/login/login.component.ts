@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -7,24 +6,24 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class LoginComponent implements OnInit {
+  // @Input() onSubmit: Function;
+  @Output() loginEvent: EventEmitter<any> = new EventEmitter();
+
   email = '';
   password = '';
+  sessionId = '';
 
-  constructor(private http: HttpClient) { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  onSubmit(): void {
-    console.log('onSubmit() called');
-    const body = {
+  clickSubmit() {
+    // console.log('Submit clicked');
+    this.loginEvent.emit({
       email: this.email,
       password: this.password,
-    };
-
-    this.http.post('/login', body).subscribe(data => {
-      console.log('Got a reply!', data);
     });
   }
 }

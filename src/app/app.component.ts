@@ -55,16 +55,36 @@ export class AppComponent {
   }
 
   onUpdatePrefs(event) {
-    console.log('onUpdatePrefs listener', event);
+    // console.log('onUpdatePrefs listener', event);
     const body = {
       session_token: this.sessionToken.slice(2),
       prefs: event,
     };
+
     this.http.post('/lunch', body).subscribe((data) => {
-      console.log('update success', data);
+      console.log('Update success', data);
 
     }, (err) => {
       console.log('Oh no! We couldn\'t update your preferences:', err);
+    });
+  }
+
+  onTodaysMeal(event) {
+    if (!this.sessionToken) {
+      console.log('Error: User is not logged in');
+      return;
+    }
+
+    const body = {
+      session_token: this.sessionToken.slice(2),
+      prefs: event,
+    };
+
+    this.http.post('/lunch/reserve', body).subscribe((data) => {
+      console.log('Successfully reserved your next meal!', data);
+
+    }, (err) => {
+      console.log('Oh no! We couldn\'t reserve your meal:', err);
     });
   }
 }

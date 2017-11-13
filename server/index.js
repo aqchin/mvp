@@ -76,6 +76,32 @@ app.post('/lunch', (req, res) => {
   });
 });
 
+app.post('/lunch/reserve', (req, res) => {
+  console.log('Got /lunch/reserve POST', req.body);
+  db.update(req.body.session_token, req.body.prefs).then((data) => {
+    // console.log('Got update', data);
+    const offset = (moment().get('hour') >= 17) ? 1 : 0;
+    const day = days[moment().day() + offset];
+    const prefs = req.body.prefs[day];
+
+    if (prefs) {
+      mp.reserve(req.body.session_token, prefs.objectId, prefs.time).then((data) => {
+        console.log('Success reserving for tomorrow!');
+        res.statusCode = 201;
+        res.send();
+      
+      }).catch((err) => {
+        console.log('Error reserving:', err.response.data);
+        res.statusCode = 403;
+        res.send(err.response.data);
+      });
+    }
+
+  }).catch((err) => {
+    console.log('Error POST /lunch:', err.data);
+  });
+});
+
 app.get('/', (req, res) => {
   // maybe check for session_token/cookie
   res.redirect(302, '/login');
@@ -90,7 +116,8 @@ const attemptCount = process.env.ATTEMPT_COUNT || 5;
 
 const reserveAll = () => {
   db.fetchUsers().then((data) => {
-    const day = days[moment().day() + 1];
+    const offset = (moment().get('hour') >= 17) ? 1 : 0;
+    const day = days[moment().day() + offset];
     // console.log(data, day); 
     
     // TODO: add retry functionality

@@ -38,6 +38,7 @@ export class LunchComponent implements OnInit, OnChanges {
     },
   };
   @Output() updatePrefsEvent: EventEmitter<any> = new EventEmitter();
+  @Output() setTodaysMealEvent: EventEmitter<any> = new EventEmitter();
   restaurants: string[];
   mealMap = {};
   idMap = {};
@@ -67,6 +68,10 @@ export class LunchComponent implements OnInit, OnChanges {
   updatePreferences() {
     // console.log('Update preferences!', this.prefs);
     this.updatePrefsEvent.emit(this.prefs);
+  }
+
+  setTodaysMeal() {
+    this.setTodaysMealEvent.emit(this.prefs);
   }
 
   onTimeChange(event) {

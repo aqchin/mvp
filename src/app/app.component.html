@@ -1,13 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{title}}!
+    Welcome to {{title}}
   </h1>
   <h2>Sign in:</h2>
   <app-login (loginEvent)="onLogin($event)"></app-login>
   <br>
   <app-lunch 
     (updatePrefsEvent)="onUpdatePrefs($event)"
+    (setTodaysMealEvent)="onTodaysMeal($event)"
     [days]="days"
     [meals]="meals"
   ></app-lunch>

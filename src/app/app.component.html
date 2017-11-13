@@ -1,16 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<div class="container">
   <h1>
-    Welcome to {{title}}
+    {{title}}
   </h1>
-  <h2>Sign in:</h2>
-  <app-login (loginEvent)="onLogin($event)"></app-login>
-  <br>
-  <app-lunch 
-    (updatePrefsEvent)="onUpdatePrefs($event)"
-    (setTodaysMealEvent)="onTodaysMeal($event)"
-    [days]="days"
-    [meals]="meals"
-  ></app-lunch>
+  <ng-template [ngIf]="!isLoggedIn()" [ngIfElse]="signedIn">
+    <h2>Sign in:</h2>
+    <app-login (loginEvent)="onLogin($event)"></app-login>
+  </ng-template>
+  <ng-template #signedIn>
+    <h2>Welcome {{firstName + '!'}}</h2>
+    <br>
+    <app-lunch 
+      (updatePrefsEvent)="onUpdatePrefs($event)"
+      (setTodaysMealEvent)="onTodaysMeal($event)"
+      [days]="days"
+      [meals]="meals"
+    ></app-lunch>
+  </ng-template>
 </div>
 

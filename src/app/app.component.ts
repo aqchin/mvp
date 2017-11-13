@@ -23,7 +23,6 @@ export class AppComponent {
   days = Object.keys(this.prefs);
 
   constructor(private http: HttpClient) {
-    // this.restaurants = this.sampleRestaurants;
     this.fetchMeals();
   }
 

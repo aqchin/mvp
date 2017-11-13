@@ -172,10 +172,8 @@ const reservationLoop = () => {
   }
 };
 
-// const server = http.createServer(app);
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
   reservationLoop();
-  // reserveAll();
 });
 

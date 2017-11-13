@@ -38,7 +38,7 @@ MVP will attempt to register for your selected restaurant when the kitchen time 
 Sign in, pick your restaurants, pick your time. Forget about picking meals for tomorrow and remember to pick up your meal for today!
 
 ## Customer Quote ##
-"" -
+"Wow" -Anonymous
 
 ## Closing and Call to Action ##
 Forget about tomorrow, your stomach needs you today!

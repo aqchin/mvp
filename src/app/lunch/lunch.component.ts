@@ -14,26 +14,33 @@ export class LunchComponent implements OnInit, OnChanges {
     mon: {
       time: '12:30-12:45pm',
       restaurant: '',
+      objectId: null,
     },
     tues: {
       time: '12:30-12:45pm',
       restaurant: '',
+      objectId: null,
     },
     wednes: {
       time: '12:30-12:45pm',
       restaurant: '',
+      objectId: null,
     },
     thurs: {
       time: '12:30-12:45pm',
       restaurant: '',
+      objectId: null,
     },
     fri: {
       time: '12:30-12:45pm',
       restaurant: '',
+      objectId: null,
     },
   };
   @Output() updatePrefsEvent: EventEmitter<any> = new EventEmitter();
   restaurants: string[];
+  mealMap = {};
+  idMap = {};
   scheduleDay: string = null;
 
   constructor() {}
@@ -42,7 +49,11 @@ export class LunchComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.meals.length > 0) {
-      this.restaurants = this.meals.map((entry) => entry['restaurant']);
+      this.restaurants = this.meals.map((entry) => {
+        this.mealMap[entry['restaurant']] = entry['meal'];
+        this.idMap[entry['restaurant']] = entry['objectId'];
+        return entry['restaurant'];
+      });
       this.setScheduleDay(this.meals[0].date);
     }
   }
@@ -66,6 +77,7 @@ export class LunchComponent implements OnInit, OnChanges {
   onRestaurantChange(event) {
     // console.log(event);
     this.prefs[event['day']].restaurant = event['restaurant'];
+    this.prefs[event['day']].objectId = this.idMap[event['restaurant']] || null;
   }
 }
 

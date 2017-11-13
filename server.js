@@ -20,11 +20,18 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  console.log(req.body);
   mp.login(req.body.email, req.body.password).then((data) => {
-    console.log('Got a response!', data);
-    res.statusCode = 200;
-    res.send(data.data);
+    // console.log('Got a response!', data);
+    db.save(req.body.email, data.data.sessionToken).then((result) => {
+      // console.log('DB save:', result);
+      res.statusCode = 200;
+      res.send(data.data);
+    
+    }).catch((err) => {
+      console.log('Error saving to db in POST /login:', err);
+      res.statusCode = 404;
+      res.send(err.data);
+    });
 
   }).catch((err) => {
     console.log('Error POST /login:', err);
@@ -59,11 +66,17 @@ app.get('/lunch', (req, res) => {
 });
 
 app.post('/lunch', (req, res) => {
+  console.log('Got /lunch POST', req.body);
+  db.update(req.body.session_token, req.body.prefs).then((data) => {
+    console.log('Got update', data);
 
+  }).catch((err) => {
+    console.log('Error POST /lunch:', err);
+  });
 });
 
 app.get('/', (req, res) => {
-  // check for session_token/cookie
+  // maybe check for session_token/cookie
   res.redirect(302, '/login');
 });
 

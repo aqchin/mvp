@@ -22,14 +22,6 @@ export class AppComponent {
   };
   days = Object.keys(this.prefs);
 
-  // sampleRestaurants = [
-  //   'ponda aspres',
-  //   'tolk o bel',
-  //   'mcdonels',
-  //   'bergor kin',
-  //   'Chick-Fil-A',
-  // ];
-
   constructor(private http: HttpClient) {
     // this.restaurants = this.sampleRestaurants;
     this.fetchMeals();
@@ -40,7 +32,7 @@ export class AppComponent {
   }
 
   onLogin(body) {
-    this.http.post('/login', body).subscribe((data) => {
+    this.http.post('/login', body).subscribe((data: object) => {
       console.log('Got a reply!', data);
       this.firstName = data['firstName'];
       this.lastName = data['lastName'];
@@ -56,7 +48,6 @@ export class AppComponent {
     this.http.get('/lunch').subscribe((data: object[]) => {
       // console.log('Got food!', data);
       this.meals = data;
-      // this.restaurants = data.map((entry) => entry['restaurant']);
 
     }, (err) => {
       console.log('Oh no! We couldn\'t find food:', err);
@@ -64,8 +55,17 @@ export class AppComponent {
   }
 
   onUpdatePrefs(event) {
-    console.log('onUpdatePrefs listener');
-    // this.http.post('/lunch', null);
+    console.log('onUpdatePrefs listener', event);
+    const body = {
+      session_token: this.sessionToken,
+      prefs: event,
+    };
+    this.http.post('/lunch', body).subscribe((data) => {
+      console.log('update success', data);
+
+    }, (err) => {
+      console.log('Oh no! We couldn\'t update your preferences:', err);
+    });
   }
 }
 

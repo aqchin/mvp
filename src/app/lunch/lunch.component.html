@@ -8,9 +8,9 @@
       [restaurants]="restaurants"
       [isScheduleDay]="day===scheduleDay"
     ></app-meal>
-      <div *ngIf="day===scheduleDay">
-      {{''}}
-    </div>
+    <ng-container *ngIf="day===scheduleDay">
+      {{mealMap[prefs[day].restaurant] || ''}}
+    </ng-container>
   </ng-container>
 
   <button (click)="updatePreferences()" type="submit">update</button>

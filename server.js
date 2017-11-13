@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const moment = require('moment');
 
 const db = require('./database');
 const mp = require('./helpers/mp');
@@ -22,7 +23,7 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   mp.login(req.body.email, req.body.password).then((data) => {
     // console.log('Got a response!', data);
-    db.save(req.body.email, data.data.sessionToken).then((result) => {
+    db.save(req.body.email, data.data.sessionToken.slice(2)).then((result) => {
       // console.log('DB save:', result);
       res.statusCode = 200;
       res.send(data.data);
@@ -71,7 +72,7 @@ app.post('/lunch', (req, res) => {
     console.log('Got update', data);
 
   }).catch((err) => {
-    console.log('Error POST /lunch:', err);
+    console.log('Error POST /lunch:', err.data);
   });
 });
 
@@ -83,6 +84,47 @@ app.get('/', (req, res) => {
 const port = process.env.PORT || '6969';
 app.set('port', port);
 
-const server = http.createServer(app);
-server.listen(port, () => {console.log(`listening on port ${port}`)});
+const days = ['sun', 'mon', 'tues', 'wednes', 'thurs', 'fri', 'sat'];
+const frequency = process.env.FREQUENCY || 15000; // 15 seconds default
+
+const snipe = () => {
+  db.fetchUsers().then((data) => {
+    const day = days[moment().day()+1];
+    // console.log(data,day);
+
+    data.forEach((user) => {
+      if (user.prefs[day].objectId) {
+        mp.reserve(user.session_token, user.prefs[day].objectId, user.prefs[day].time).then((data) => {
+          console.log('Success reserving', user.email);
+        
+        }).catch((err) => {
+          console.log('Error reserving', err.response.data);
+        });
+      }
+    });
+    
+  }).catch((err) => {
+    console.log('Bad DB fetch while sniping', err.data);
+  });
+};
+
+
+const sleeping = () => {
+  if (moment().day() < 5) {
+    const timeout = moment();
+    // setTimeout(snipe, timeout);
+
+  } else {
+    // 24hr - currHr + 16 hr ~= tmr at 4'ish
+    const timeout = (40 - moment().get('hour')) * 3600000;
+    setTimeout(sleeping, timeout);
+  }
+};
+
+// const server = http.createServer(app);
+app.listen(port, () => {
+  console.log(`listening on port ${port}`)
+  // sleeping();
+  snipe();
+});
 

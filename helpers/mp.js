@@ -35,17 +35,23 @@ const fetchMeals = (cityId) => {
   return axios.post(getByCityUrl, data, config);
 };
 
-const reserve = (sessionToken, scheduleId, pickupTime='12:45-1:00pm', quantity=1) => {
+const reserve = (sessionToken, scheduleId, pickupTime='12:45pm-1:00pm', quantity=1) => {
   const data = {
     'pickup_time': pickupTime,
     'quantity': quantity,
     'schedule_id': scheduleId,
-    'source': 'web',
+    'source': 'Web',
   };
 
-  const reserveCfg = Object.assign({
-    'Cookie': `_mealpal_session=${sessionToken}; isLoggedIn=true;`,
-  }, config);
+  const reserveCfg = {
+    headers: {
+      'Cookie': `_mealpal_session=${sessionToken}`,
+    }
+  }
+  Object.assign(reserveCfg.headers, config.headers);
+
+  console.log('sending to', reservationsUrl, 'with',  data, 'AND',reserveCfg);
+  return axios.post(reservationsUrl, data, reserveCfg);
 };
 
 module.exports.login = login;

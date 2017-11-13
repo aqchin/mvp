@@ -57,7 +57,7 @@ export class AppComponent {
   onUpdatePrefs(event) {
     console.log('onUpdatePrefs listener', event);
     const body = {
-      session_token: this.sessionToken,
+      session_token: this.sessionToken.slice(2),
       prefs: event,
     };
     this.http.post('/lunch', body).subscribe((data) => {

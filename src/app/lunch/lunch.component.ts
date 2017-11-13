@@ -12,27 +12,27 @@ export class LunchComponent implements OnInit, OnChanges {
   @Input() days: string[] = ['mon', 'tues', 'wednes', 'thurs', 'fri'];
   @Input() prefs: object = {
     mon: {
-      time: '12:30-12:45pm',
+      time: '12:30pm-12:45pm',
       restaurant: '',
       objectId: null,
     },
     tues: {
-      time: '12:30-12:45pm',
+      time: '12:30pm-12:45pm',
       restaurant: '',
       objectId: null,
     },
     wednes: {
-      time: '12:30-12:45pm',
+      time: '12:30pm-12:45pm',
       restaurant: '',
       objectId: null,
     },
     thurs: {
-      time: '12:30-12:45pm',
+      time: '12:30pm-12:45pm',
       restaurant: '',
       objectId: null,
     },
     fri: {
-      time: '12:30-12:45pm',
+      time: '12:30pm-12:45pm',
       restaurant: '',
       objectId: null,
     },

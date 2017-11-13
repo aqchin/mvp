@@ -3,6 +3,7 @@ const connection = mongoose.createConnection(process.env.DB || 'mongodb://localh
 
 const userSchema = mongoose.Schema({
   email: {type: String, required: true, unique: true},
+  session_token: {type: String, required: true}, // most recent
   prefs: {
     mon: {
       restaurant: {type: String, required: false},
@@ -51,12 +52,13 @@ const save = (email, sessionToken) => {
       if (saveErr) reject(saveErr);
       else {
         const q = {email: email};
+        const update = {session_token: sessionToken};
         const options = {
           upsert: true,
           new: true,
           setDefaultsOnInsert: true,
         };
-        User.findOneAndUpdate(q, {}, options, (err, res) => {
+        User.findOneAndUpdate(q, update, options, (err, res) => {
           if (err) reject(err);
           else resolve(res);
         });
@@ -72,7 +74,10 @@ const update = (sessionToken, prefs) => {
       else {
         // console.log(res);
         const q = {email: res[0].email};
-        const update = {prefs: prefs};
+        const update = {
+          session_token: sessionToken,
+          prefs: prefs,
+        };
         User.findOneAndUpdate(q, update, {}, (err, res) => {
           if (err) reject(err);
           else resolve(res);
@@ -82,6 +87,16 @@ const update = (sessionToken, prefs) => {
   });
 };
 
+const fetchUsers = () => {
+  return new Promise((resolve, reject) => {
+    User.find({}).exec((err, res) => {
+      if (err) reject(err);
+      else resolve(res);
+    });
+  });
+}
+
 module.exports.save = save;
 module.exports.update = update;
+module.exports.fetchUsers = fetchUsers;
 

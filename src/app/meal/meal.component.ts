@@ -18,15 +18,15 @@ export class MealComponent implements OnInit {
   extendedLunch = false;
 
   times = [
-    '12:30-12:45pm',
-    '12:45-1:00pm',
-    '1:00-1:15pm',
-    '1:15-1:30pm',
+    '12:30pm-12:45pm',
+    '12:45pm-1:00pm',
+    '1:00pm-1:15pm',
+    '1:15pm-1:30pm',
   ];
   timesExtended = [
-    '1:30-1:45pm',
-    '1:45-2:00pm',
-    '2:15-2:30pm',
+    '1:30pm-1:45pm',
+    '1:45pm-2:00pm',
+    '2:15pm-2:30pm',
   ];
 
   constructor() {}

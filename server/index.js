@@ -14,10 +14,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.post('/login', (req, res) => {
@@ -43,7 +43,7 @@ app.post('/login', (req, res) => {
 
 app.get('/lunch', (req, res) => {
   console.log(req.body);
-  const cityId = req.body.cityId || '00000000-1000-4000-9091-919aa43e4747';
+  const cityId = req.body.cityId || '00000000-1000-4000-9091-919aa43e4747'; // sf
   mp.fetchMeals(cityId).then((data) => {
     // console.log('Got food!', data);
     res.statusCode = 200;
@@ -85,46 +85,66 @@ const port = process.env.PORT || '6969';
 app.set('port', port);
 
 const days = ['sun', 'mon', 'tues', 'wednes', 'thurs', 'fri', 'sat'];
-const frequency = process.env.FREQUENCY || 15000; // 15 seconds default
+const attemptFrequency = process.env.ATTEMPT_FREQUENCY || 15000; // 15 seconds default
+const attemptCount = process.env.ATTEMPT_COUNT || 5;
 
-const snipe = () => {
+const reserveAll = () => {
   db.fetchUsers().then((data) => {
-    const day = days[moment().day()+1];
-    // console.log(data,day);
+    const day = days[moment().day() + 1];
+    // console.log(data, day); 
+    
+    // TODO: 
 
     data.forEach((user) => {
-      if (user.prefs[day].objectId) {
-        mp.reserve(user.session_token, user.prefs[day].objectId, user.prefs[day].time).then((data) => {
-          console.log('Success reserving', user.email);
+      if (user.prefs && user.prefs[day].objectId) {
+        const prefs = user.prefs[day];
+        mp.reserve(user.session_token, prefs.objectId, prefs.time).then((data) => {
+          console.log('Success reserving for:', user.email);
         
         }).catch((err) => {
-          console.log('Error reserving', err.response.data);
+          console.log('Error reserving:', err.response.data);
         });
       }
     });
     
   }).catch((err) => {
-    console.log('Bad DB fetch while sniping', err.data);
+    console.log('Error fetching DB:', err.data);
   });
+
+  // 24hr - currHr + 16 hr ~= tmr at 4pm'ish
+  const timeout = (40 - moment().get('hour')) * 3600000;
+  console.log(`[${moment().format('HH:mm:ss')}] Sleeping for ${timeout}ms...`);
+  setTimeout(reservationLoop, timeout);
 };
 
-
-const sleeping = () => {
+const reservationLoop = () => {
   if (moment().day() < 5) {
-    const timeout = moment();
-    // setTimeout(snipe, timeout);
+    if (moment().get('hour') >= 17) {
+      reserveAll();
+    
+    } else {
+      const openTime = moment().set({
+        hour: '17',
+        minute: '00',
+        second: '00'
+      }).format('H:mm:ss');
+      const timeout = openTime.diff(moment()); // should default to ms
+
+      setTimeout(reserveAll, Math.max(0, timeout));
+    }
 
   } else {
-    // 24hr - currHr + 16 hr ~= tmr at 4'ish
+    // 24hr - currHr + 16 hr ~= tmr at 4pm'ish
     const timeout = (40 - moment().get('hour')) * 3600000;
-    setTimeout(sleeping, timeout);
+    console.log(`[${moment().format('HH:mm:ss')}] Sleeping for ${timeout}ms...`);
+    setTimeout(reservationLoop, timeout);
   }
 };
 
 // const server = http.createServer(app);
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
-  // sleeping();
-  snipe();
+  reservationLoop();
+  // reserveAll();
 });
 

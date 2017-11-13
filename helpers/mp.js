@@ -28,9 +28,7 @@ const login = (email, password) => { // login is email
 };
 
 const fetchMeals = (cityId) => {
-  const data = {
-    'cityId': cityId,
-  };
+  const data = {'cityId': cityId};
 
   return axios.post(getByCityUrl, data, config);
 };
@@ -50,7 +48,7 @@ const reserve = (sessionToken, scheduleId, pickupTime='12:45pm-1:00pm', quantity
   }
   Object.assign(reserveCfg.headers, config.headers);
 
-  console.log('sending to', reservationsUrl, 'with',  data, 'AND',reserveCfg);
+  // console.log('sending to', reservationsUrl, 'with',  data, 'AND',reserveCfg);
   return axios.post(reservationsUrl, data, reserveCfg);
 };
 

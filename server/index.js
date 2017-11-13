@@ -93,8 +93,7 @@ const reserveAll = () => {
     const day = days[moment().day() + 1];
     // console.log(data, day); 
     
-    // TODO: 
-
+    // TODO: add retry functionality
     data.forEach((user) => {
       if (user.prefs && user.prefs[day].objectId) {
         const prefs = user.prefs[day];
@@ -118,8 +117,13 @@ const reserveAll = () => {
 };
 
 const reservationLoop = () => {
-  if (moment().day() < 5) {
-    if (moment().get('hour') >= 17) {
+  const day = moment().day();
+  if (day < 6) {
+    const hour = moment().get('hour');
+    // reservation hours are 5pm-9:30am, starting previous day
+    if (day === 0 && hour >= 17 ||
+        day === 5 && hour <= 9 ||
+        day > 0 && day < 5 && (hour >=17 || hour <= 9)) {
       reserveAll();
     
     } else {

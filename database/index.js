@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const connection = mongoose.createConnection(process.env.DB || 'mongodb://localhost/mvp');
+const db = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB}`;
+const connection = mongoose.createConnection(db || 'mongodb://localhost/mvp');
 
 const userSchema = mongoose.Schema({
   email: {type: String, required: true, unique: true},
